@@ -1,4 +1,5 @@
 import pathlib
+import pathlib, requests
 import numpy as np, pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
@@ -110,6 +111,24 @@ ax[1].set_title("What drives the prediction")
 plt.tight_layout(); plt.savefig("figures/double_burden_ml.png", dpi=200)
 
 # ---------- 5) Optional map: predicted vs. actual ----------
+
+def get_il_blockgroups(path="cache/cb_il_bg.zip"):
+    p = pathlib.Path(path)
+    p.parent.mkdir(exist_ok=True)
+    if p.exists():
+        return p
+    # Newest first; the Census Bureau posts a new year's file each year.
+    for year in [2024, 2023, 2022]:
+        url = f"https://www2.census.gov/geo/tiger/GENZ{year}/shp/cb_{year}_17_bg_500k.zip"
+        r = requests.get(url, timeout=120)
+        print(year, r.status_code)
+        if r.ok:
+            p.write_bytes(r.content)
+            return p
+    raise RuntimeError("No boundary file found. Download it manually (see below).")
+
+zpath = get_il_blockgroups()
+
 zpath = pathlib.Path("cache/cb_il_bg.zip")
 if zpath.exists():
     import geopandas as gpd
