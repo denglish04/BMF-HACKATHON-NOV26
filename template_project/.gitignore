@@ -20,3 +20,4 @@ dist/
 
 #Json Cache from API call
 cache/
+*.csv
