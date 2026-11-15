@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BMF Hackathon · Nov 2026 Projects</title>
+  <meta name="description" content="Projects built by students at the Black Men's Forum Hackathon, November 2026." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>BMF Hackathon · Nov 2026</h1>
+    <p>
+      Projects built by classmates at the Black Men's Forum Hackathon. Many of them use
+      <a href="https://pedp-ejscreen.azurewebsites.net/" target="_blank" rel="noopener">EJScreen</a>
+      environmental justice data. Click a project to see the live site or the code.
+    </p>
+    <input id="search" type="search" placeholder="Search by title, author, or tag…" aria-label="Search projects" />
+  </header>
+
+  <main>
+    <section id="projects" class="grid" aria-live="polite"></section>
+  </main>
+
+  <footer>
+    <p>
+      <strong>Add your project:</strong> host it with GitHub Pages in your own repo, then open a pull request
+      that adds an entry to <code>docs/projects.js</code> in
+      <a href="https://github.com/denglish04/BMF-HACKATHON-NOV26" target="_blank" rel="noopener">this repo</a>.
+    </p>
+  </footer>
+
+  <script src="projects.js"></script>
+  <script>
+    (function () {
+      const grid = document.getElementById("projects");
+      const search = document.getElementById("search");
+
+      function el(tag, attrs, text) {
+        const node = document.createElement(tag);
+        for (const [k, v] of Object.entries(attrs || {})) node.setAttribute(k, v);
+        if (text != null) node.textContent = text;
+        return node;
+      }
+
+      function isSafeUrl(url) {
+        if (!url) return false;
+        try {
+          const u = new URL(url, location.href);
+          return u.protocol === "https:" || u.protocol === "http:" || u.protocol === "file:";
+        } catch { return false; }
+      }
+
+      function externalLink(href, cls, text) {
+        return el("a", { href, class: cls, target: "_blank", rel: "noopener" }, text);
+      }
+
+      function card(p) {
+        const article = el("article", { class: "card" });
+        const mainUrl = isSafeUrl(p.site) ? p.site : isSafeUrl(p.repo) ? p.repo : null;
+
+        if (isSafeUrl(p.image)) {
+          article.appendChild(el("img", { src: p.image, alt: `Screenshot of ${p.title}`, loading: "lazy" }));
+        }
+
+        const body = el("div", { class: "card-body" });
+        const h2 = el("h2");
+        h2.appendChild(mainUrl ? externalLink(mainUrl, "", p.title) : document.createTextNode(p.title));
+        body.appendChild(h2);
+        body.appendChild(el("p", { class: "authors" }, (p.authors || []).join(", ")));
+        body.appendChild(el("p", { class: "description" }, p.description || ""));
+
+        if (p.tags && p.tags.length) {
+          const tags = el("div", { class: "tags" });
+          p.tags.forEach(t => tags.appendChild(el("span", { class: "tag" }, t)));
+          body.appendChild(tags);
+        }
+
+        const links = el("div", { class: "links" });
+        if (isSafeUrl(p.site)) links.appendChild(externalLink(p.site, "btn primary", "Live site"));
+        if (isSafeUrl(p.repo)) links.appendChild(externalLink(p.repo, "btn", "Code"));
+        body.appendChild(links);
+
+        article.appendChild(body);
+        return article;
+      }
+
+      function matches(p, q) {
+        const hay = [p.title, p.description, ...(p.authors || []), ...(p.tags || [])].join(" ").toLowerCase();
+        return hay.includes(q);
+      }
+
+      function render() {
+        const q = search.value.trim().toLowerCase();
+        const list = (typeof PROJECTS !== "undefined" ? PROJECTS : []).filter(p => !q || matches(p, q));
+        grid.replaceChildren();
+        if (!list.length) {
+          grid.appendChild(el("p", { class: "empty" }, "No projects match your search."));
+          return;
+        }
+        list.forEach(p => grid.appendChild(card(p)));
+      }
+
+      search.addEventListener("input", render);
+      render();
+    })();
+  </script>
+</body>
+</html>
