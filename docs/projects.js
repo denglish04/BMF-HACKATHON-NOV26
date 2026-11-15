@@ -26,21 +26,20 @@ const PROJECTS = [
     tags: ["EJScreen", "ML", "Python", "Interactive"],
   },
 
-  // ---- Placeholders: replace with real classmate projects ----
   {
-    title: "Classmate Project (TBD)",
-    authors: ["Your Name"],
-    description: "Placeholder. Replace this entry with your project's details.",
-    site: "https://your-username.github.io/your-repo/",
-    repo: "https://github.com/your-username/your-repo",
-    tags: ["placeholder"],
+    title: "Redlining × EJScreen",
+    authors: ["gibbse-droid"],
+    description: "Interactive map overlaying 1930s HOLC redlining maps on EPA EJScreen 2024 indicators.",
+    site: "https://gibbse-droid.github.io/redlining-ejscreen/",
+    repo: "https://github.com/gibbse-droid/redlining-ejscreen",
+    tags: ["EJScreen", "Redlining", "Map"],
   },
   {
-    title: "Classmate Project (TBD)",
-    authors: ["Your Name"],
-    description: "Placeholder. Replace this entry with your project's details.",
-    site: "https://your-username.github.io/your-repo/",
-    repo: "https://github.com/your-username/your-repo",
-    tags: ["placeholder"],
+    title: "Park Access → Pro Sports",
+    authors: ["Natnator08"],
+    description: "Tracking park access in low-income neighborhoods and how it connects to youth sports and professional athletes.",
+    site: "https://natnator08.github.io/park-access-pro-sports/analysis.html?city=chicago",
+    repo: "https://github.com/Natnator08/park-access-pro-sports",
+    tags: ["Parks", "Youth sports", "Chicago"],
   },
 ];
