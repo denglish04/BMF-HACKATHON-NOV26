@@ -19,11 +19,11 @@ const PROJECTS = [
     title: "Double Burden",
     authors: ["Djasahn English"],
     description:
-      "Machine learning on EJScreen data to find block groups in Lake County, IL that face both environmental and demographic burden.",
-    site: "",
-    repo: "https://github.com/denglish04/BMF-HACKATHON-NOV26",
+      "Can social indicators alone find Lake County neighborhoods burdened by both pollution and lack of health insurance? An interactive ML explainer with live sliders, a map, and SHAP.",
+    site: "https://denglish04.github.io/double-burden-lake-county/",
+    repo: "https://github.com/denglish04/double-burden-lake-county",
     image: "img/double_burden_map.png",
-    tags: ["EJScreen", "ML", "Python"],
+    tags: ["EJScreen", "ML", "Python", "Interactive"],
   },
 
   // ---- Placeholders: replace with real classmate projects ----
